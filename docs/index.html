@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Collector Standup</title>
+    <style>
+      body {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Collector's Standup-a-tron 2000</h1>
+    <pre id="standup-randr"></pre>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+    <script>
+      window.onload = getStandupList();
+      
+      function getStandupList() {
+        const pre = document.getElementById("standup-randr");
+
+        fetch("./team_members.txt")
+          .then( r => r.text() )
+          .then( t => {
+            var names_list = t.split("\n").filter(el => {
+              return el != null && el != '';
+            });
+            const names_randr = randomFunc(names_list);
+            var text = "";
+            for(let i = 0; i < names_randr.length; i++){
+              var name = names_randr[i];
+              text = text + i + ". " + name + "\n";
+            }
+          pre.textContent = text;
+        })
+      }
+
+      function randomFunc(myArr) {
+        var d = new Date();
+        var seed = d.getUTCDate().valueOf() + d.getUTCMonth().valueOf() * 100 + d.getUTCFullYear().valueOf() * 10000;
+        var myrng = new Math.seedrandom(seed);
+        
+        var l = myArr.length, temp, index;
+        while (l > 0) {
+          index = Math.floor(myrng() * l);
+          l--;
+          temp = myArr[l];
+          myArr[l] = myArr[index];
+          myArr[index] = temp;
+        }
+        return myArr;
+      }
+    </script>
+  </body>
+</html>
