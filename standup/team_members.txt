@@ -1,7 +1,6 @@
 Axel
 Agustín
 Carlos
-Jan
 Nico
 Pep
 Hendrigo
@@ -9,3 +8,4 @@ Cristina
 Clément
 Dani
 Ibai
+David
